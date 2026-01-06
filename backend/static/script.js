@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:8000/search";
+//const API_URL = "http://localhost:8000/search";
+
+const API_URL = "/search";
 
 async function searchItems() {
     const query = document.getElementById('searchInput').value;

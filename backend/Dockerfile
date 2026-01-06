@@ -11,14 +11,17 @@ WORKDIR /app
 #    libaio1 \
 #    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y --no-install-recommends libaio1 phython3-dev gcc  || apt-get install -y --no-install-recommends libaio1t64 && rm -rf /var/lib/apt/lists/*
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc  || apt-get install -y --no-install-recommends libaio1t64 && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
 COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install --upgrade pip
+ 
 # Copy application code
 COPY . .
 

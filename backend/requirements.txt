@@ -1,6 +1,7 @@
-fastapi==0.109.0
-uvicorn==0.27.0
-oracledb==2.0.0
-google-cloud-aiplatform==1.38.1
+fastapi
+uvicorn
+oracledb>=2.0.0
+google-cloud-aiplatform
 pydantic==2.5.3
 python-dotenv==1.0.0
+numpy

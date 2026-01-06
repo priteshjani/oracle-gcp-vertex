@@ -6,7 +6,7 @@ import oracledb
 # reachable from this service project.
 DB_USER = os.getenv("DB_USER", "admin")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "Welcome12345")
-DB_DSN = os.getenv("DB_DSN", "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.1.50)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=pdb1)))")
+DB_DSN = os.getenv("DB_CONNECT", "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.1.50)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=pdb1)))")
 
 def get_db_connection():
     """
@@ -20,8 +20,9 @@ def get_db_connection():
 
         # For this demo code, we'll assume a connection can be made, or we'll mock it if running without actual DB.
         # This function returns a connection object.
+        oracledb.defaults.thin = True
         print(f"Connecting to Oracle DB at {DB_DSN}...")
-        connection = oracledb.connect(user=DB_USER, password=DB_PASSWORD, dsn=DB_DSN, thin=True)
+        connection = oracledb.connect(user=DB_USER, password=DB_PASSWORD, dsn=DB_DSN)
         return connection
     except Exception as e:
         print(f"Error connecting to Oracle DB: {e}")

@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
@@ -8,6 +10,10 @@ from db import get_db_connection
 from ai import AIController
 
 app = FastAPI(title="Retail Supermarket Demo API")
+ai_controller = AIController()
+
+# 1. Mount the static directory so CSS/JS are accessible at /static/filename
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Enable CORS for local development
 app.add_middleware(
@@ -33,8 +39,8 @@ class SearchRequest(BaseModel):
     query: str
 
 @app.get("/")
-def read_root():
-    return {"message": "Welcome to the Retail Supermarket Demo API"}
+async def read_index():
+    return FileResponse('static/index.html')
 
 @app.post("/search", response_model=List[Item])
 def search_items(request: SearchRequest):
@@ -49,6 +55,7 @@ def search_items(request: SearchRequest):
 
     # Step 1: Generate SQL using Vertex AI (Gemini)
     sql_query = ai_controller.generate_sql_query(user_query)
+
     print(f"Generated SQL: {sql_query}")
 
     # Step 2: Execute SQL
