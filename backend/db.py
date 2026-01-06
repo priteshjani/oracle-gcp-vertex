@@ -21,9 +21,8 @@ def get_db_connection():
         # For this demo code, we'll assume a connection can be made, or we'll mock it if running without actual DB.
         # This function returns a connection object.
         print(f"Connecting to Oracle DB at {DB_DSN}...")
-        # connection = oracledb.connect(user=DB_USER, password=DB_PASSWORD, dsn=DB_DSN)
-        # return connection
-        return MockConnection()
+        connection = oracledb.connect(user=DB_USER, password=DB_PASSWORD, dsn=DB_DSN, thin=True)
+        return connection
     except Exception as e:
         print(f"Error connecting to Oracle DB: {e}")
         return None
