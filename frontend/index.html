@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket AI Search</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>🛒 Supermarket AI Search</h1>
+            <p>Powered by Vertex AI & Oracle Autonomous Database</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <input type="text" id="searchInput" placeholder="e.g., Show me shoes for boys size 7 in blue" />
+            <button id="searchBtn" onclick="searchItems()">Search</button>
+        </section>
+
+        <section id="resultsSection" class="results-grid">
+            <!-- Items will be injected here -->
+        </section>
+
+        <div id="loading" class="hidden">Thinking...</div>
+        <div id="error" class="hidden"></div>
+    </main>
+
+    <footer class="container">
+        <p>Demo Architecture: HTML/JS Frontend -> FastAPI Backend -> Vertex AI (Gemini) -> Oracle Autonomous DB</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
