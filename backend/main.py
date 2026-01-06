@@ -4,8 +4,8 @@ from pydantic import BaseModel
 from typing import List, Optional
 import uvicorn
 import os
-from .db import get_db_connection
-from .ai import AIController
+from db import get_db_connection
+from ai import AIController
 
 app = FastAPI(title="Retail Supermarket Demo API")
 

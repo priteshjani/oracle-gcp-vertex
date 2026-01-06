@@ -8,13 +8,12 @@ PROJECT_ID = os.getenv("PROJECT_ID", "mock-project-id")
 LOCATION = os.getenv("LOCATION", "us-central1")
 
 # Initialize Vertex AI
-# vertexai.init(project=PROJECT_ID, location=LOCATION)
+vertexai.init(project=PROJECT_ID, location=LOCATION)
 
 class AIController:
     def __init__(self):
         # In a real scenario, we load the Gemini model
-        # self.model = GenerativeModel("gemini-pro")
-        pass
+        self.model = GenerativeModel("gemini-2.5-pro")
 
     def generate_sql_query(self, user_query: str) -> str:
         """
@@ -24,19 +23,27 @@ class AIController:
         You are a SQL expert. Convert the following user query into a SQL query for a table named 'INVENTORY'.
         The table schema is:
         - ID (NUMBER)
-        - NAME (VARCHAR)
-        - CATEGORY (VARCHAR) -- e.g., 'Boys', 'Girls', 'Men', 'Women'
-        - SIZE_VAL (VARCHAR) -- e.g., '7', '10', 'M', 'L'
-        - COLOR (VARCHAR)
+        - NAME (VARCHAR2)
+        - CATEGORY (VARCHAR2) -- e.g., 'Boys', 'Girls', 'Men', 'Women'
+        - SIZE_VAL (VARCHAR2) -- e.g., '7', '10', 'M', 'L'
+        - COLOR (VARCHAR2)
         - PRICE (NUMBER)
-        - IMAGE_URL (VARCHAR)
+        - IMAGE_URL (VARCHAR2)
+
+        Rules:
+        1. Use only the columns listed above.
+        2. Return ONLY the raw SQL string. No markdown, no backticks.
+        3. Use Oracle SQL syntax.
+        4. Case-insensitive search: Use UPPER() for string comparisons if necessary.
 
         User Query: "{user_query}"
 
         Return only the SQL query.
         """
 
-        # response = self.model.generate_content(prompt)
+        response = self.model.generate_content(prompt)
+        sql = response.text.strip().replace("```sql", "").replace("```", "").replace(";", "")
+        return sql
         # return response.text.strip().replace("```sql", "").replace("```", "")
 
         # Mock response for the demo
